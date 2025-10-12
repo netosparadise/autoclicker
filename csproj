@@ -1,0 +1,505 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+public struct offsets
+{
+    public Int64 world;
+    public Int64 replayinterface;
+    public Int64 viewPort;
+    public Int64 camera;
+    public Int64 bIsPlayerAiming;
+    public Int64 PlayerAimingAt;
+    public Int64 HandleBullet;
+    public Int64 GameplayCamHolder;
+    public Int64 GameplayCamTarget;
+    public Int64 BlipList;
+    public Int64 EntityType;
+    public Int64 PlayerSpeed;
+    public Int64 Armor;
+    public Int64 BoneManager;
+    public Int64 PlayerInfo;
+    public Int64 PlayerNetID;
+    public Int64 WeaponManager;
+    public Int64 FragInsNmGTA;
+    public Int64 ConfigFlags;
+    public Int64 MaxHealth;
+    public Int64 LastVehicle;
+    public Int64 Driver;
+    public Int64 DoorLock;
+    public Int64 Stamina;
+    public Int64 VisibleFlag;
+    public Int64 Handling;
+    public Int64 VehicleState;
+    public Int64 SeatBelt;
+    public Int64 SeatBeltWindShield;
+    public Int64 FrameFlag;
+}
+
+public class Program
+{
+    static void Main(string[] args)
+    {
+        var offsets = new offsets();
+        offsets.world = 0x254D448; // Example offset for world, replace with actual value
+        offsets.replayinterface = 0x1F5B820; // Example offset for replayinterface, replace with actual value
+        offsets.viewPort = 0x1FBC100; // Example offset for viewPort, replace with actual value
+        offsets.camera = 0x1FBCFA8; // Example offset for camera, replace with actual value
+        offsets.bIsPlayerAiming = 0x2CA3594; // Example offset for bIsPlayerAiming, replace with actual value
+        offsets.PlayerAimingAt = 0x1FCA160; // Example offset for PlayerAimingAt, replace with actual value
+        offsets.HandleBullet = 0xFF716C; // Example offset for HandleBullet, replace with actual value
+        offsets.GameplayCamHolder = 0x288D72; // Example offset for GameplayCamHolder, replace with actual value
+        offsets.GameplayCamTarget = 0x1FBD298; // Example offset for GameplayCamTarget, replace with actual value
+        offsets.BlipList = 0x1FBD6E0; // Example offset for BlipList, replace with actual value
+        offsets.EntityType = 0x1098; // Example offset for EntityType, replace with actual value
+        offsets.PlayerSpeed = 0x0CF0; // Example offset for PlayerSpeed, replace with actual value
+        offsets.Armor = 0x1530; // Example offset for Armor, replace with actual value
+        offsets.BoneManager = 0x410; // Example offset for BoneManager, replace with actual value
+        offsets.PlayerInfo = 0x10A8; // Example offset for PlayerInfo, replace with actual value
+        offsets.PlayerNetID = 0x88; // Example offset for PlayerNetID, replace with actual value
+        offsets.WeaponManager = 0x10B8; // Example offset for WeaponManager, replace with actual value
+        offsets.FragInsNmGTA = 0x1430; // Example offset for FragInsNmGTA, replace with actual value
+        offsets.ConfigFlags = 0x1444; // Example offset for ConfigFlags, replace with actual value
+        offsets.MaxHealth = 0x284; // Example offset for MaxHealth, replace with actual value
+        offsets.LastVehicle = 0xD10; // Example offset for LastVehicle, replace with actual value
+        offsets.Driver = 0xC48; // Example offset for Driver, replace with actual value
+        offsets.DoorLock = 0x1370; // Example offset for DoorLock, replace with actual value
+        offsets.Stamina = 0xCF4; // Example offset for Stamina, replace with actual value
+        offsets.VisibleFlag = 0x145C; // Example offset for VisibleFlag, replace with actual value
+        offsets.Handling = 0x918; // Example offset for Handling, replace with actual value
+        offsets.VehicleState = 0x92A; // Example offset for VehicleState, replace with actual value
+        offsets.SeatBelt = 0x143C; // Example offset for SeatBelt, replace with actual value
+        offsets.SeatBeltWindShield = 0x1448; // Example offset for SeatBeltWindShield, replace with actual value
+        offsets.FrameFlag = 0x0270; // Example offset for FrameFlag, replace with actual value
+        offsets.bIsIntialized = true; // Example value for bIsIntialized, replace with actual value
+
+        var process = Process.GetCurrentProcess();
+        var modules = process.MainModule.Modules.Cast<ProcessModule>();
+        var modules = process.MainModule.Modules.Cast<ProcessModule>().FirstOrDefault(m => m.ModuleName.Equals("gta"));
+        var dwloc = modules.BaseAddress + offsets.dwloc; // Example offset for dwloc, replace with actual value
+        var dwoc = modules.BaseAddress + offsets.dwoc; // Example offset for dwoc, replace with actual value
+
+        var Self = GetLocalPlayer(); // Get local player entity
+        if (Self == null) return;
+
+        var LocalPlayer = GetLocalPlayer(Self.netid); // Get local player object
+        if (LocalPlayer == null) return;
+
+        if (IsKeyDown(Keys.MButton5) && GetAsyncKeyState(Keys.MButton5) != 0x8000)
+        {
+            var cmuspd = modules.BaseAddress + offsets.cmuspd; // Example offset for cmuspd, replace with actual value
+            var g_h_proteolyticase = modules.BaseAddress + offsets.G_h_proteolyticase; // Example offset for G_h_proteolyticase, replace with actual value
+            var g_nOffsetForCMuspd = 0x0124081C; // Example offset for g_nOffsetForCMuspd, replace with actual value
+
+            var g_h_boneupdates = modules.BaseAddress + offsets.G_h_boneupdates; // Example offset for G_h_boneupdates, replace with actual value
+            var g_samplese = modules.BaseAddress + offsets.g_samplese; // Example offset for g_samplese, replace with actual value
+
+            var l_SeedKey = modules.BaseAddress + offsets.l_SeedKey; // Example offset for l_SeedKey, replace with actual value
+
+            var g_MatrixStick = modules.BaseAddress + offsets.G_MatrixStick; // Example offset for G_MatrixStick, replace with actual value
+
+            var g_h_shaderprolog = modules.BaseAddress + offsets.g_h_shaderprolog; // Example offset for g_h_shaderprolog, replace with actual value
+            var g_nOffsetForgsamplese = 0x01F5E278; // Example offset for g_nOffsetForgsamplese, replace with actual value
+
+            var LocalPos = MathUtils.MathWorld::ToLocalPosition(Self);
+            var boneupdates = CMathUtils::GetBoneupdates(World, LocalPos);
+            if (boneupdates != null)
+            {
+                var g_CrosshairCenterX = CMathUtils::GetCrosshairX(World, cmuspd);
+                var g_CrosshairCenterY = CMathUtils::GetCrosshairY(World, cmuspd);
+
+                var players_list = new List<Player>();
+                CMathUtils::GetPlayersInFov(World, LocalPos, g_CrosshairCenterX, g_CrosshairCenterY, players_list, false);
+
+                var closest_player = CMathUtils::GetClosestPlayer(players_list);
+                if (closest_player != null)
+                {
+                    var distance = Vector3.Distance(LocalPos, closest_player.pos);
+                    if (distance <= 45.0f)
+                    {
+                        MathUtils.MathWorld::SetLocalDirection(Self, closest_player.pos);
+                    }
+                    else
+                    {
+                        MathUtils.MathWorld::SmoothLocalDirection(Self, closest_player.pos, CMathUtils::GetTimeDifference());
+                    }
+                }
+
+                MathUtils.MathWorld::ApplyNewRotation(g_h_boneupdates, g_MatrixStick, boneupdates);
+            }
+        }
+        else if (GetAsyncKeyState(Keys.MButton5) == 0x8000)
+        {
+           MathUtils.MathWorld::Reset();
+        }
+    }
+
+    static Player GetLocalPlayer(uint playerid)
+    {
+        var world = CMathUtils::GetWorld();
+        return GetLocalPlayer(playerid, world);
+    }
+
+    static Player GetLocalPlayer(uint playerid, IntPtr world)
+    {
+        if (IsPlayerValid(playerid, world))
+        {
+            var player = new Player();
+            player.netid = playerid;
+
+            if (IsPedValid(GetPedForPlayer(playerid, world), world))
+            {
+                player.ped = GetPedForPlayer(playerid, world);
+
+                if (!IsEntityDead(player.ped, world))
+                {
+                    player.playerid = GetPlayerForPed(player.ped, world);
+                    player.dead = IsDead(player.ped);
+                    player.pos = GetPosition(player.ped, world);
+                    player.entitytype = GetEntityType(player.ped, world);
+                    player.playerspeed = GetPlayerSpeed(playerid, world);
+                    player.armor = GetPlayerArmor(playerid, world);
+                    player.maxhealth = GetPlayerMaxHealth(playerid, world);
+                    player.stamina = GetPlayerStamina(playerid, world);
+                    player.seatsbelt = IsSeatBeltOn(playerid, world);
+                    player.seatsbeltswashield = IsSeatBeltWindShieldOn(playerid, world);
+                    player.vehiclelocks = IsVehicleLocked(GetVehicleForPlayer(playerid, world));
+                    player.weapons = GetPlayerWeapons(playerid, world);
+                    player.weapons_list = GetWeapons(player.weapons, player.playerid, world);
+
+                    return player;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    static bool IsKeyDown(int vk)
+    {
+        if (MappedVirtualKeys.ContainsKey(vk))
+        {
+            return GetAsyncKeyState((int)MappedVirtualKeys[vk]) != 0x8000;
+        }
+        else
+        {
+            return GetAsyncKeyState(vk) != 0x8000;
+        }
+    }
+
+    static bool IsKeyUp(int vk)
+    {
+        return !IsKeyDown(vk);
+    }
+
+    static bool IsMouseButtonDown(int button)
+    {
+        return Mouse.GetButtonState(button) != 0x8000;
+    }
+
+    static bool IsMouseButtonUp(int button)
+    {
+        return !IsMouseButtonDown(button);
+    }
+
+    static uint GetMaxPlayers()
+    {
+        return 0xFFFCFEFF; // Example maximum number of players, replace with actual value
+    }
+
+    static uint GetPlayerId()
+    {
+        return GetMaxPlayers();
+    }
+
+    static IntPtr GetLocalWorld()
+    {
+        return (IntPtr)offsets.world; // Replace with actual value
+    }
+
+    static bool IsPedValid(uint ped, IntPtr world)
+    {
+        return ped >= (uint)world + offsets.Ped && ped < (uint)world + offsets.Ped + GetMaxPlayers();
+    }
+
+    static bool IsEntityValid(uint entity, IntPtr world)
+    {
+        return entity >= (uint)world + offsets.Entity && entity < (uint)world + offsets.Entity + GetMaxPlayers();
+    }
+
+    static bool IsPlayerValid(uint player, IntPtr world)
+    {
+        return player >= (uint)world + offsets.PlayerID && player < (uint)world + offsets.PlayerID + GetMaxPlayers();
+    }
+
+    static uint GetPedForPlayer(uint player, IntPtr world)
+    {
+        return (uint)(world + offsets.Ped + player);
+    }
+
+    static uint GetPlayerForPed(uint ped, IntPtr world)
+    {
+        return (uint)(world + offsets.PlayerID + ped);
+    }
+
+    static uint GetVehicleForPlayer(uint player, IntPtr world)
+    {
+        return (uint)(world + offsets.Vehicle + player);
+    }
+
+    static Vector3 GetPosition(uint entity, IntPtr world)
+    {
+        return new Vector3(
+            CMathUtils::Read<Single>(world + offsets.Entity + entity * 0x70 + 0x1BC, 0xC0),
+            CMathUtils::Read<Single>(world + offsets.Entity + entity * 0x70 + 0x1BC, 0xC4),
+            CMathUtils::Read<Single>(world + offsets.Entity + entity * 0x70 + 0x1BC, 0xC8)
+        );
+    }
+
+    static bool IsEntityDead(uint entity, IntPtr world)
+    {
+        return CMathUtils::Read<Int32>(world + offsets.Entity + entity * 0x70 + 0x1C8, 0xCC) != 0;
+    }
+
+    static int GetEntityType(uint entity, IntPtr world)
+    {
+        return CMathUtils::Read<Int32>(world + offsets.Entity + entity * 0x70 + 0x19C, 0xCC);
+    }
+
+    static int GetPlayerSpeed(uint player, IntPtr world)
+    {
+        return CMathUtils::Read<Int32>(world + offsets.PlayerID + player * 0x214, 0x18);
+    }
+
+    static int GetPlayerArmor(uint player, IntPtr world)
+    {
+        return CMathUtils::Read<Int32>(world + offsets.PlayerID + player * 0x214, 0x90);
+    }
+
+    static int GetPlayerMaxHealth(uint player, IntPtr world)
+    {
+        return CMathUtils::Read<Int32>(world + offsets.PlayerID + player * 0x214, 0x8C);
+    }
+
+    static float GetPlayerStamina(uint player, IntPtr world)
+    {
+        return CMathUtils::Read<Single>(world + offsets.PlayerID + player * 0x214, 0x94);
+    }
+
+    static bool IsSeatBeltOn(uint player, IntPtr world)
+    {
+        return CMathUtils::Read<Int32>(world + offsets.PlayerID + player * 0x214, 0xF4) != 0;
+    }
+
+    static bool IsSeatBeltWindShieldOn(uint player, IntPtr world)
+    {
+        return CMathUtils::Read<Int32>(world + offsets.PlayerID + player * 0x214, 0xF8) != 0;
+    }
+
+    static bool IsVehicleLocked(uint vehicle)
+    {
+        return CMathUtils::Read<Int32>(vehicle, 0x1370) != 0;
+    }
+
+    static int GetPlayerWeapons(uint player, IntPtr world)
+    {
+        return CMathUtils::Read<Int32>(world + offsets.PlayerID + player * 0x214, 0x1D8);
+    }
+
+    static List<Weapon> GetWeapons(uint weapons, uint playerid, IntPtr world)
+    {
+        var weapons_list = new List<Weapon>();
+        for (int i = 0; i < GetMaxWeapons(); i++)
+        {
+            var weapon = new Weapon();
+            weapon.id = (int)(world + offsets.WeaponID + i);
+            weapon.type = (int)(world + offsets.WeaponType + i);
+            weapon.attach = (int)(world + offsets.WeaponAttach + i);
+            weapon.ammo = (int)(world + offsets.WeaponAmmo + i);
+            weapon.slot = (int)(world + offsets.WeaponSlot + i);
+
+            weapons_list.Add(weapon);
+        }
+
+        return weapons_list;
+    }
+
+    static int GetMaxWeapons()
+    {
+        return 0xFFFCFEFF; // Example maximum number of weapons, replace with actual value
+    }
+
+    static uint GetCamera(IntPtr world)
+    {
+        return (uint)(world + offsets.Camera);
+    }
+
+    static Vector3 GetCameraPosition(IntPtr world)
+    {
+        return new Vector3(
+            CMathUtils::Read<Single>(world + offsets.Camera, 0x32C),
+            CMathUtils::Read<Single>(world + offsets.Camera, 0x330),
+            CMathUtils::Read<Single>(world + offsets.Camera, 0x334)
+        );
+    }
+
+    static float GetCameraFov(IntPtr world)
+    {
+        return CMathUtils::Read<Single>(world + offsets.Camera, 0x258);
+    }
+
+    static void SetCameraFov(IntPtr world, float fov)
+    {
+        CMathUtils::Write<Single>(world + offsets.Camera, fov, 0x258);
+    }
+
+    static Vector3 ToLocalPosition(IntPtr entity)
+    {
+        return new Vector3(
+            CMathUtils::Read<Single>(entity, 0xD90) * -1.0f,
+            CMathUtils::Read<Single>(entity, 0xD94) * -1.0f,
+            CMathUtils::Read<Single>(entity, 0xD98) * -1.0f
+        );
+    }
+
+    static void SetLocalPosition(IntPtr entity, Vector3 pos)
+    {
+        CMathUtils::Write<Single>(entity, pos.X * -1.0f, 0xD90);
+        CMathUtils::Write<Single>(entity, pos.Y * -1.0f, 0xD94);
+        CMathUtils::Write<Single>(entity, pos.Z * -1.0f, 0xD98);
+    }
+
+    static Vector3 ToLocalDirection(IntPtr entity)
+    {
+        return new Vector3(
+            CMathUtils::Read<Single>(entity, 0xDC8) * -1.0f,
+            CMathUtils::Read<Single>(entity, 0xDC4) * -1.0f,
+            CMathUtils::Read<Single>(entity, 0xDC0) * -1.0f
+        );
+    }
+
+    static void SetLocalDirection(IntPtr entity, Vector3 dir)
+    {
+        CMathUtils::Write<Single>(entity, dir.X * -1.0f, 0xDC8);
+        CMathUtils::Write<Single>(entity, dir.Y * -1.0f, 0xDC4);
+        CMathUtils::Write<Single>(entity, dir.Z * -1.0f, 0xDC0);
+    }
+
+    static void SetNewRotation(IntPtr boneupdate, IntPtr matrixstick, IntPtr boneupdates)
+    {
+        CMathUtils::Write<IntPtr>(boneupdate, matrixstick, 0xC);
+        CMathUtils::Write<IntPtr>(boneupdate, boneupdates, 0x14);
+
+        for (int i = 0; i < GetMaxBoneupdates(); i++)
+        {
+            var bv1 = CMathUtils::Read<IntPtr>(boneupdate, i * 0x18 + 0x18);
+            var bv2 = CMathUtils::Read<IntPtr>(boneupdate, i * 0x18 + 0x20);
+
+            var boneupdate2 = boneupdates.ToInt64() + i * 0x124;
+
+            if (bv1 == bv2)
+            {
+                continue;
+            }
+
+            CMathUtils::Write<IntPtr>(boneupdate2, bv1, 0xC);
+            CMathUtils::Write<IntPtr>(boneupdate2, bv2, 0x1C);
+            CMathUtils::Write<IntPtr>(boneupdate2, matrixstick, 0x28);
+
+            var bone2 = CMathUtils::Read<IntPtr>(boneupdate2, 0x38);
+            var bone1 = CMathUtils::Read<IntPtr>(boneupdate2, 0x3C);
+
+            for (int j = 0; j < GetMaxBoneupdates(); j++)
+            {
+                var rX1 = CMathUtils::Read<Single>(bone1, j * 0xC + 0xA4);
+                var rY1 = CMathUtils::Read<Single>(bone1, j * 0xC + 0xA8);
+                var rZ1 = CMathUtils::Read<Single>(bone1, j * 0xC + 0xAC);
+
+                var rX2 = CMathUtils::Read<Single>(bone2, j * 0xC + 0xA4);
+                var rY2 = CMathUtils::Read<Single>(bone2, j * 0xC + 0xA8);
+                var rZ2 = CMathUtils::Read<Single>(bone2, j * 0xC + 0xAC);
+
+                CMathUtils::Write<Single>(boneupdate2, rX1 - rX2, j * 0xC + 0x74);
+                CMathUtils::Write<Single>(boneupdate2, rY1 - rY2, j * 0xC + 0x78);
+                CMathUtils::Write<Single>(boneupdate2, rZ1 - rZ2, j * 0xC + 0x7C);
+
+                CMathUtils::Write<Single>(boneupdate2, rX2 - rX1, j * 0xC + 0x84);
+                CMathUtils::Write<Single>(boneupdate2, rY2 - rY1, j * 0xC + 0x88);
+                CMathUtils::Write<Single>(boneupdate2, rZ2 - rZ1, j * 0xC + 0x8C);
+
+                var tX1 = CMathUtils::Read<Single>(bone1, j * 0xC + 0xA4);
+                var tY1 = CMathUtils::Read<Single>(bone1, j * 0xC + 0xA8);
+                var tZ1 = CMathUtils::Read<Single>(bone1, j * 0xC + 0xAC);
+
+                var tX2 = CMathUtils::Read<Single>(bone2, j * 0xC + 0xA4);
+                var tY2 = CMathUtils::Read<Single>(bone2, j * 0xC + 0xA8);
+                var tZ2 = CMathUtils::Read<Single>(bone2, j * 0xC + 0xAC);
+
+                CMathUtils::Write<Single>(boneupdate2, tX1 - tX2, j * 0xC + 0x94);
+                CMathUtils::Write<Single>(boneupdate2, tY1 - tY2, j * 0xC + 0x98);
+                CMathUtils::Write<Single>(boneupdate2, tZ1 - tZ2, j * 0xC + 0x9C);
+
+                var vX1 = CMathUtils::Read<Single>(bone1, j * 0xC + 0x5C);
+                var vY1 = CMathUtils::Read<Single>(bone1, j * 0xC + 0x60);
+                var vZ1 = CMathUtils::Read<Single>(bone1, j * 0xC + 0x64);
+
+                var vX2 = CMathUtils::Read<Single>(bone2, j * 0xC + 0x5C);
+                var vY2 = CMathUtils::Read<Single>(bone2, j * 0xC + 0x60);
+                var vZ2 = CMathUtils::Read<Single>(bone2, j * 0xC + 0x64);
+
+                CMathUtils::Write<Single>(boneupdate2, vX1 - vX2, j * 0xC + 0x34);
+                CMathUtils::Write<Single>(boneupdate2, vY1 - vY2, j * 0xC + 0x38);
+                CMathUtils::Write<Single>(boneupdate2, vZ1 - vZ2, j * 0xC + 0x3C);
+
+                var aX1 = CMathUtils::Read<Single>(bone1, j * 0xC + 0x7C);
+                var aY1 = CMathUtils::Read<Single>(bone1, j * 0xC + 0x84) * -1.0f;
+                var aZ1 = CMathUtils::Read<Single>(bone1, j * 0xC + 0x74) * -1.0f;
+
+                var aX2 = CMathUtils::Read<Single>(bone2, j * 0xC + 0x7C);
+                var aY2 = CMathUtils::Read<Single>(bone2, j * 0xC + 0x84) * -1.0f;
+                var aZ2 = CMathUtils::Read<Single>(bone2, j * 0xC + 0x74) * -1.0f;
+
+                CMathUtils::Write<Single>(boneupdate2, aX1 - aX2, j * 0xC + 0xA4);
+                CMathUtils::Write<Single>(boneupdate2, aY1 - aY2, j * 0xC + 0xA8);
+                CMathUtils::Write<Single>(boneupdate2, aZ1 - aZ2, j * 0xC + 0xAC);
+            }
+        }
+    }
+
+    static void SmoothLocalDirection(IntPtr entity, Vector3 dir, float smoothing_factor)
+    {
+        float tXfactorsX = 5.6f;
+        float tXfactorsY = -3.3f;
+
+        var current_dirX = MathUtils.MathWorld::ToLocalDirection(entity).X;
+        var current_dirY = MathUtils.MathWorld::ToLocalDirection(entity).Y;
+
+        if (current_dirX > tXfactorsX)
+        {
+            current_dirX -= tXfactorsX;
+        }
+        else if (current_dirX < -tXfactorsX)
+        {
+            current_dirX += tXfactorsX;
+        }
+        else
+        {
+            current_dirX *= smoothing_factor;
+        }
+
+        if (current_dirY > tXfactorsY)
+        {
+            current_dirY -= tXfactorsY;
+        }
+        else if (current_dirY < -tXfactorsY)
+        {
+            current_dirY += tXfactorsY;
+        }
+        else
+        {
+            current_dirY *= smoothing_factor;
+        }
+
+        MathUtils.MathWorld::SetLocalDirection(entity,
